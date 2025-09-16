@@ -1,22 +1,27 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const TitleBar = () => {
-    return(
-        <View style={styles.titleBar}>
-            <Text style={styles.titleText}>CD Player</Text>
-            <View style={styles.controlButtons}>
-                <Text style={styles.buttonText}>_</Text>
-                <Text style={styles.buttonText}>□</Text>
-                <Text style={styles.buttonText}>X</Text>
-            </View>
-        </View>
-    );
+  return (
+    <LinearGradient
+      colors={['#522436', '#AF4569']} // Array com as cores em hexadecimal
+      start={{ x: 0, y: 0 }} // Ponto inicial do degradê (topo esquerdo)
+      end={{ x: 1, y: 0 }} // Ponto final (topo direito)
+      style={styles.titleBar}
+    >
+      <Text style={styles.titleText}>CD Player</Text>
+      <View style={styles.controlButtons}>
+        <Text style={styles.buttonText}>_</Text>
+        <Text style={styles.buttonText}>□</Text>
+        <Text style={styles.buttonText}>X</Text>
+      </View>
+    </LinearGradient>
+  );
 };
 
 const styles = StyleSheet.create({
     titleBar: {
-        backgroundColor: '#000080',
         height: 25,
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -27,6 +32,8 @@ const styles = StyleSheet.create({
     {
         color: '#FFFFFF',
         fontWeight: 'bold',
+        fontSize: 14,
+        fontFamily: 'ms-sans-serif',
     },
     controlButtons: {
         flexDirection: 'row',
