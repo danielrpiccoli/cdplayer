@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import TitleBar from '../components/titleBar';
+import TrackInfo from '../components/trackInfo';
 
 const mockAlbumArt = require('../../assets/nightInQuestionMock.png');
 
@@ -13,6 +14,9 @@ const PlayerScreen = () => {
                     <View style={styles.albumArtContainer}>
                         <Image source={mockAlbumArt} style={styles.albumArt} />
                     </View>
+                     <View style={styles.trackInfoControlsContainer}>
+                        <TrackInfo />
+                        </View>
                 </View>
             </View>
         </View>
@@ -27,14 +31,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#C0C0C0',
     },
     playerWindow: {
-        width: 352,
+        width: 400,
         height: 159,
         backgroundColor: '#DFDFDF',
 
         borderTopColor: '#FFFFFF',
         borderLeftColor: '#FFFFFF',
         borderBottomColor: '#8B8B8B',
-        borderRightColor: '8B8B8B',
         borderWidth: 2,
     },
     playerBody:{
@@ -55,6 +58,10 @@ const styles = StyleSheet.create({
         height: '100%',
         resizeMode: 'cover',
     },
+    trackInfoControlsContainer: {
+        flex: 1,
+        marginLeft: 10,
+    }
     
 });
 

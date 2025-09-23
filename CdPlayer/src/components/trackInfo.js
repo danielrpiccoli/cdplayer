@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const TrackInfo = () => {
+const TrackInfo = ({ label, value }) => {
     return(
         <View style={styles.container}>
             <View style={styles.infoRow}>
                 <Text style={styles.label}>Artist:</Text>
-                <View style={style.inputField}>
+                <View style={styles.inputField}>
                     <Text style={styles.text}>TV Girl</Text>
                 </View>
                 <Text style={styles.dropdown}>▼</Text>
@@ -35,11 +35,11 @@ const styles = StyleSheet.create({
     label: {
         width: 50,
         fontWeight: 'bold',
-        // placeholder fonte: fontFamily: 'ms-sans-sherif',
+        fontFamily: 'ms-sans-serif-1',
     },
     inputField: {
         flex: 1,
-        backgroundColor: '#FFFFFFF',
+        backgroundColor: '#FFFFFF',
         height: 20,
         justifyContent: 'center',
         paddingHorizontal: 5,
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
     },
     text: {
-        //fontFamily: 'ms-sans-sheriff',
+        fontFamily: 'ms-sans-serif-1',
     },
     dropdown: {
         marginLeft: 3,
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#000000',
         backgroundColor:'#C0C0C0',
-        borderTopColor: '#FFFFFFF',
+        borderTopColor: '#FFFFFF',
         borderLeftColor: '#FFFFFF',
         borderBottomColor: '#8B8B8B',
         borderRightColor: '#8B8B8B',
