@@ -8,6 +8,7 @@ import android.media.MediaMetadata
 import android.media.session.MediaSessionManager
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
+import android.util.Log
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,6 +17,8 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
+
+private const val TAG = "CDPlayer"
 
 class MediaListenerService : NotificationListenerService() {
 
@@ -28,11 +31,13 @@ class MediaListenerService : NotificationListenerService() {
 
     override fun onListenerConnected() {
         super.onListenerConnected()
+        Log.d(TAG, "Listener connected")
         activeNotifications?.firstOrNull { it.packageName == "com.spotify.music" }
             ?.let { processNotification(it) }
     }
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
+        Log.d(TAG, "Notification posted: ${sbn.packageName}")
         if (sbn.packageName != "com.spotify.music") return
         processNotification(sbn)
     }
@@ -46,6 +51,7 @@ class MediaListenerService : NotificationListenerService() {
         val extras = sbn.notification.extras
         val track = extras.getString("android.title") ?: return
         val artist = extras.getString("android.text") ?: ""
+        Log.d(TAG, "Processing Spotify: track=$track artist=$artist")
         val album = extras.getString("android.subText") ?: ""
 
         val isPlaying = sbn.notification.actions?.any { action ->
