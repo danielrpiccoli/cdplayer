@@ -49,6 +49,7 @@ class MediaListenerService : NotificationListenerService() {
 
     private fun processNotification(sbn: StatusBarNotification) {
         val extras = sbn.notification.extras
+        Log.d(TAG, "Spotify extras: ${extras.keySet().joinToString { "$it=${extras.get(it)}" }}")
         val track = extras.getString("android.title") ?: return
         val artist = extras.getString("android.text") ?: ""
         Log.d(TAG, "Processing Spotify: track=$track artist=$artist")
