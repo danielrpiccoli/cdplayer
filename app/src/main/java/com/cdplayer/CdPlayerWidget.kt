@@ -1,6 +1,7 @@
 package com.cdplayer
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.glance.GlanceId
@@ -27,21 +28,29 @@ import com.cdplayer.components.TrackInfo
 class CdPlayerWidget : GlanceAppWidget() {
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val albumArtPath = prefs.getString(KEY_ALBUM_ART_PATH, "") ?: ""
+        val albumArt = if (albumArtPath.isNotEmpty()) {
+            try { BitmapFactory.decodeFile(albumArtPath) } catch (e: Exception) { null }
+        } else null
+
         val state = PlayerState(
             artist = prefs.getString(KEY_ARTIST, "") ?: "",
             track = prefs.getString(KEY_TRACK, "") ?: "",
+            album = prefs.getString(KEY_ALBUM, "") ?: "",
             isPlaying = prefs.getBoolean(KEY_IS_PLAYING, false),
+            albumArtPath = albumArtPath,
             positionMs = prefs.getLong(KEY_POSITION_MS, 0L),
+            positionTimestamp = prefs.getLong(KEY_POSITION_TIMESTAMP, 0L),
             durationMs = prefs.getLong(KEY_DURATION_MS, 0L)
         )
         provideContent {
-            PlayerScreen(state)
+            PlayerScreen(state, albumArtImageProvider = albumArt?.let { ImageProvider(it) })
         }
     }
 }
 
 @Composable
-fun PlayerScreen(state: PlayerState) {
+fun PlayerScreen(state: PlayerState, albumArtImageProvider: ImageProvider?) {
     Box(
         modifier = GlanceModifier
             .fillMaxSize()
@@ -68,7 +77,7 @@ fun PlayerScreen(state: PlayerState) {
                         .padding(2.dp)
                 ) {
                     Image(
-                        provider = ImageProvider(R.drawable.night_in_question),
+                        provider = albumArtImageProvider ?: ImageProvider(R.drawable.night_in_question),
                         contentDescription = "Album Art",
                         modifier = GlanceModifier.fillMaxSize()
                     )
@@ -76,6 +85,7 @@ fun PlayerScreen(state: PlayerState) {
                 TrackInfo(
                     artist = state.artist,
                     track = state.track,
+                    album = state.album,
                     modifier = GlanceModifier.defaultWeight()
                 )
             }
