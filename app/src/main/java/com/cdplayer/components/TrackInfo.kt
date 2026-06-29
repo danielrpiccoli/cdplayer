@@ -24,11 +24,15 @@ import androidx.glance.unit.ColorProvider
 import com.cdplayer.R
 
 @Composable
-fun TrackInfo() {
-    Column(modifier = GlanceModifier.padding(start = 10.dp)) {
-        InfoRow(label = "Artist:", value = "TV Girl")
+fun TrackInfo(artist: String, track: String) {
+    Column(
+        modifier = GlanceModifier
+            .defaultWeight()
+            .padding(start = 8.dp)
+    ) {
+        InfoRow(label = "Artist:", value = artist.ifBlank { "--" })
         Spacer(modifier = GlanceModifier.height(5.dp))
-        InfoRow(label = "Track:", value = "The Desolation Tango")
+        InfoRow(label = "Track:", value = track.ifBlank { "--" })
     }
 }
 
@@ -47,7 +51,6 @@ private fun InfoRow(label: String, value: String) {
             ),
             modifier = GlanceModifier.width(45.dp)
         )
-        // Win98-style sunken input field
         Box(
             modifier = GlanceModifier
                 .defaultWeight()
@@ -64,7 +67,6 @@ private fun InfoRow(label: String, value: String) {
                 )
             )
         }
-        // Dropdown arrow
         Box(
             modifier = GlanceModifier
                 .padding(start = 2.dp)
