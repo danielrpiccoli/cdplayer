@@ -11,7 +11,6 @@ import androidx.glance.layout.Box
 import androidx.glance.layout.Column
 import androidx.glance.layout.Row
 import androidx.glance.layout.Spacer
-import androidx.glance.layout.defaultWeight
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
 import androidx.glance.layout.padding
@@ -24,11 +23,9 @@ import androidx.glance.unit.ColorProvider
 import com.cdplayer.R
 
 @Composable
-fun TrackInfo(artist: String, track: String) {
+fun TrackInfo(artist: String, track: String, modifier: GlanceModifier = GlanceModifier) {
     Column(
-        modifier = GlanceModifier
-            .defaultWeight()
-            .padding(start = 8.dp)
+        modifier = modifier.padding(start = 8.dp)
     ) {
         InfoRow(label = "Artist:", value = artist.ifBlank { "--" })
         Spacer(modifier = GlanceModifier.height(5.dp))

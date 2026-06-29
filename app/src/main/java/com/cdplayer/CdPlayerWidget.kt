@@ -73,7 +73,11 @@ fun PlayerScreen(state: PlayerState) {
                         modifier = GlanceModifier.fillMaxSize()
                     )
                 }
-                TrackInfo(artist = state.artist, track = state.track)
+                TrackInfo(
+                    artist = state.artist,
+                    track = state.track,
+                    modifier = GlanceModifier.defaultWeight()
+                )
             }
             ProgressBar(progressFraction = state.progressFraction)
             ControlButtons(isPlaying = state.isPlaying)
