@@ -23,13 +23,15 @@ import androidx.glance.unit.ColorProvider
 import com.cdplayer.R
 
 @Composable
-fun TrackInfo(artist: String, track: String, modifier: GlanceModifier = GlanceModifier) {
+fun TrackInfo(artist: String, track: String, album: String, modifier: GlanceModifier = GlanceModifier) {
     Column(
         modifier = modifier.padding(start = 8.dp)
     ) {
         InfoRow(label = "Artist:", value = artist.ifBlank { "--" })
         Spacer(modifier = GlanceModifier.height(5.dp))
         InfoRow(label = "Track:", value = track.ifBlank { "--" })
+        Spacer(modifier = GlanceModifier.height(5.dp))
+        InfoRow(label = "Album:", value = album.ifBlank { "--" })
     }
 }
 
