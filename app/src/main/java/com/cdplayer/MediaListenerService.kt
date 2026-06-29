@@ -107,10 +107,15 @@ class MediaListenerService : NotificationListenerService() {
             .putLong(KEY_DURATION_MS, durationMs)
             .apply()
 
+        Log.d(TAG, "saveAndUpdate called: track=$track")
         scope.launch {
+            Log.d(TAG, "Coroutine launched")
             val manager = GlanceAppWidgetManager(this@MediaListenerService)
-            manager.getGlanceIds(CdPlayerWidget::class.java).forEach { id ->
+            val ids = manager.getGlanceIds(CdPlayerWidget::class.java)
+            Log.d(TAG, "Glance IDs found: ${ids.size}")
+            ids.forEach { id ->
                 CdPlayerWidget().update(this@MediaListenerService, id)
+                Log.d(TAG, "Updated glance id: $id")
             }
         }
     }
