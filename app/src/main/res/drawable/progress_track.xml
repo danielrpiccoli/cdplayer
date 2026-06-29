@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Win98 sunken groove for progress/slider track.
+    Dark gray top-left, white bottom-right (opposite of raised button).
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF" />
+        </shape>
+    </item>
+    <item android:bottom="1dp" android:right="1dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#8B8B8B" />
+        </shape>
+    </item>
+    <item android:left="1dp" android:top="1dp" android:bottom="1dp" android:right="1dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#C0C0C0" />
+        </shape>
+    </item>
+</layer-list>
