@@ -28,10 +28,8 @@ fun TrackInfo(artist: String, track: String, album: String, modifier: GlanceModi
         modifier = modifier.padding(start = 8.dp)
     ) {
         InfoRow(label = "Artist:", value = artist.ifBlank { "--" })
-        Spacer(modifier = GlanceModifier.height(5.dp))
+        Spacer(modifier = GlanceModifier.height(4.dp))
         InfoRow(label = "Track:", value = track.ifBlank { "--" })
-        Spacer(modifier = GlanceModifier.height(5.dp))
-        InfoRow(label = "Album:", value = album.ifBlank { "--" })
     }
 }
 

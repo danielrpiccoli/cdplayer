@@ -41,17 +41,17 @@ fun ControlButtons(isPlaying: Boolean) {
     Row(
         modifier = GlanceModifier
             .fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 4.dp),
+            .padding(horizontal = 8.dp, vertical = 3.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         ControlButton(label = "◄◄", action = broadcast(ACTION_PREVIOUS))
-        Spacer(GlanceModifier.width(4.dp))
+        Spacer(GlanceModifier.width(3.dp))
         ControlButton(label = "▶▶", action = broadcast(ACTION_NEXT))
-        Spacer(GlanceModifier.width(4.dp))
+        Spacer(GlanceModifier.width(3.dp))
         ControlButton(label = if (isPlaying) "⏸" else "▶", action = broadcast(ACTION_PLAY_PAUSE))
-        Spacer(GlanceModifier.width(4.dp))
+        Spacer(GlanceModifier.width(3.dp))
         ControlButton(label = "■", action = broadcast(ACTION_STOP))
-        Spacer(GlanceModifier.width(4.dp))
+        Spacer(GlanceModifier.width(3.dp))
         ControlButton(label = "●", action = broadcast(ACTION_PLAY_PAUSE))
     }
 }
@@ -60,7 +60,7 @@ fun ControlButtons(isPlaying: Boolean) {
 private fun ControlButton(label: String, action: Action) {
     Box(
         modifier = GlanceModifier
-            .size(32.dp)
+            .size(26.dp)
             .background(ImageProvider(R.drawable.button_border))
             .clickable(action),
         contentAlignment = Alignment.Center
@@ -69,7 +69,7 @@ private fun ControlButton(label: String, action: Action) {
             text = label,
             style = TextStyle(
                 color = ColorProvider(R.color.black),
-                fontSize = 12.sp,
+                fontSize = 10.sp,
                 fontWeight = FontWeight.Bold
             )
         )

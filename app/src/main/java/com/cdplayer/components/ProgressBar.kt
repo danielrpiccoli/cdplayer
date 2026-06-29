@@ -27,7 +27,7 @@ fun ProgressBar(progressFraction: Float) {
         modifier = GlanceModifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp)
-            .height(24.dp),
+            .height(18.dp),
         contentAlignment = Alignment.Center
     ) {
         // Sunken track line
@@ -46,7 +46,7 @@ fun ProgressBar(progressFraction: Float) {
             Box(
                 modifier = GlanceModifier
                     .width(thumbWidth)
-                    .height(24.dp)
+                    .height(18.dp)
                     .background(ImageProvider(R.drawable.button_border))
             ) {}
             Box(modifier = GlanceModifier.width(rightSpace).height(4.dp)) {}

@@ -67,12 +67,12 @@ fun PlayerScreen(state: PlayerState, albumArtImageProvider: ImageProvider?) {
             Row(
                 modifier = GlanceModifier
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = 6.dp),
+                    .padding(horizontal = 8.dp, vertical = 4.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Box(
                     modifier = GlanceModifier
-                        .size(80.dp)
+                        .size(64.dp)
                         .background(ColorProvider(R.color.black))
                         .padding(2.dp)
                 ) {

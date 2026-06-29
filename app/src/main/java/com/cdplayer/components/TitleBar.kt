@@ -27,7 +27,7 @@ fun TitleBar() {
     Row(
         modifier = GlanceModifier
             .fillMaxWidth()
-            .height(24.dp)
+            .height(20.dp)
             .background(ImageProvider(R.drawable.title_bar_gradient))
             .padding(horizontal = 5.dp),
         verticalAlignment = Alignment.CenterVertically
