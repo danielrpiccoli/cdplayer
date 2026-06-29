@@ -15,42 +15,55 @@ import androidx.glance.layout.Box
 import androidx.glance.layout.Column
 import androidx.glance.layout.Row
 import androidx.glance.layout.fillMaxSize
+import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.padding
 import androidx.glance.layout.size
 import androidx.glance.unit.ColorProvider
+import com.cdplayer.components.ControlButtons
+import com.cdplayer.components.ProgressBar
 import com.cdplayer.components.TitleBar
 import com.cdplayer.components.TrackInfo
 
 class CdPlayerWidget : GlanceAppWidget() {
     override suspend fun provideGlance(context: Context, id: GlanceId) {
+        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val state = PlayerState(
+            artist = prefs.getString(KEY_ARTIST, "") ?: "",
+            track = prefs.getString(KEY_TRACK, "") ?: "",
+            isPlaying = prefs.getBoolean(KEY_IS_PLAYING, false),
+            positionMs = prefs.getLong(KEY_POSITION_MS, 0L),
+            durationMs = prefs.getLong(KEY_DURATION_MS, 0L)
+        )
         provideContent {
-            PlayerScreen()
+            PlayerScreen(state)
         }
     }
 }
 
 @Composable
-fun PlayerScreen() {
+fun PlayerScreen(state: PlayerState) {
     Box(
         modifier = GlanceModifier
             .fillMaxSize()
             .background(ColorProvider(R.color.silver))
-            .padding(8.dp),
+            .padding(4.dp),
         contentAlignment = Alignment.Center
     ) {
         Column(
             modifier = GlanceModifier
+                .fillMaxWidth()
                 .background(ImageProvider(R.drawable.window_border))
         ) {
             TitleBar()
             Row(
-                modifier = GlanceModifier.padding(10.dp),
+                modifier = GlanceModifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 6.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Album art with black border
                 Box(
                     modifier = GlanceModifier
-                        .size(90.dp)
+                        .size(80.dp)
                         .background(ColorProvider(R.color.black))
                         .padding(2.dp)
                 ) {
@@ -60,8 +73,10 @@ fun PlayerScreen() {
                         modifier = GlanceModifier.fillMaxSize()
                     )
                 }
-                TrackInfo()
+                TrackInfo(artist = state.artist, track = state.track)
             }
+            ProgressBar(progressFraction = state.progressFraction)
+            ControlButtons(isPlaying = state.isPlaying)
         }
     }
 }
