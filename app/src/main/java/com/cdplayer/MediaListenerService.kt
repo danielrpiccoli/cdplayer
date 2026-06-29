@@ -49,15 +49,16 @@ class MediaListenerService : NotificationListenerService() {
 
     private fun processNotification(sbn: StatusBarNotification) {
         val extras = sbn.notification.extras
-        Log.d(TAG, "Spotify extras: ${extras.keySet().joinToString { "$it=${extras.get(it)}" }}")
-        val track = extras.getString("android.title") ?: return
-        val artist = extras.getString("android.text") ?: ""
+        val track = extras.getCharSequence("android.title")?.toString() ?: return
+        val artist = extras.getCharSequence("android.text")?.toString() ?: ""
         Log.d(TAG, "Processing Spotify: track=$track artist=$artist")
-        val album = extras.getString("android.subText") ?: ""
 
         val isPlaying = sbn.notification.actions?.any { action ->
             action.title?.toString()?.contains("pause", ignoreCase = true) == true
         } ?: false
+
+        val album = extras.getCharSequence("android.subText")?.toString()
+            ?.takeIf { it != "No Repeat" && it != "Repeat" && it != "Shuffle" } ?: ""
 
         val albumArtPath = sbn.notification.getLargeIcon()?.let { icon ->
             try {
