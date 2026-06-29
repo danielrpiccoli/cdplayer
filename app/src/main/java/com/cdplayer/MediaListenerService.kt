@@ -1,19 +1,30 @@
 package com.cdplayer
 
-import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.media.MediaMetadata
 import android.media.session.MediaSessionManager
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
+import androidx.glance.appwidget.GlanceAppWidgetManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 
 class MediaListenerService : NotificationListenerService() {
+
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+
+    override fun onDestroy() {
+        super.onDestroy()
+        scope.cancel()
+    }
 
     override fun onListenerConnected() {
         super.onListenerConnected()
@@ -88,15 +99,11 @@ class MediaListenerService : NotificationListenerService() {
             .putLong(KEY_DURATION_MS, durationMs)
             .apply()
 
-        val manager = AppWidgetManager.getInstance(this)
-        val ids = manager.getAppWidgetIds(ComponentName(this, CdPlayerReceiver::class.java))
-        if (ids.isNotEmpty()) {
-            sendBroadcast(
-                Intent(this, CdPlayerReceiver::class.java).apply {
-                    action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-                    putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
-                }
-            )
+        scope.launch {
+            val manager = GlanceAppWidgetManager(this@MediaListenerService)
+            manager.getGlanceIds(CdPlayerWidget::class.java).forEach { id ->
+                CdPlayerWidget().update(this@MediaListenerService, id)
+            }
         }
     }
 }
